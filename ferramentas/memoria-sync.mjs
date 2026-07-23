@@ -61,6 +61,25 @@ if (!ORIGEM || !existsSync(ORIGEM)) {
 const md = d => (existsSync(d) ? readdirSync(d).filter(f => f.endsWith(".md")) : []);
 const ler = f => { try { return readFileSync(f, "utf8"); } catch { return null; } };
 
+// ── O GUARDIÃO DE SEGREDOS ────────────────────────────────────────────────────
+// Foi a falta disto que deixou uma memória com PII de admin de domínio ir parar num repo (22/jul).
+// A fronteira NÃO é e-mail pessoal (isso é esperado num repo de contexto privado) — é VALOR DE
+// SEGREDO VIVO: chave de API, token, chave privada, senha escrita. Esses nunca vão pro git; vivem
+// no cofre (secret.mjs). E memória marcada `sensitive: true` no frontmatter também não sobe.
+const PADROES_SEGREDO = [
+  { nome: "chave privada", re: /-----BEGIN [A-Z ]*PRIVATE KEY-----/ },
+  { nome: "chave estilo AWS", re: /\bAKIA[0-9A-Z]{16}\b/ },
+  { nome: "chave do Google", re: /\bAIza[0-9A-Za-z_\-]{35}\b/ },
+  { nome: "token OpenAI/Anthropic", re: /\b(sk|pk)-[A-Za-z0-9]{20,}\b/ },
+  { nome: "token do GitHub", re: /\bgh[pousr]_[A-Za-z0-9]{30,}\b/ },
+  { nome: "atribuição de segredo com valor", re: /\b(secret|token|senha|password|api[_-]?key|refresh[_-]?token|client[_-]?secret)\b["']?\s*[:=]\s*["']?[A-Za-z0-9_\-]{16,}/i },
+];
+function varreSegredo(texto) {
+  for (const p of PADROES_SEGREDO) { const m = texto.match(p.re); if (m) return { tipo: p.nome, trecho: m[0].slice(0, 6) + "…" }; }
+  return null;
+}
+const ehSensivel = texto => /^\s*sensitive:\s*true\s*$/im.test(texto.split(/^---$/m)[1] || "");
+
 // ── conferência: o que está podre ────────────────────────────────────────────
 function conferir(dir, rotulo) {
   const arquivos = md(dir);
@@ -99,16 +118,31 @@ const [de, para] = acao === "enviar" ? [ORIGEM, DESTINO] : [DESTINO, ORIGEM];
 if (!existsSync(de)) { console.error(`✗ origem não existe: ${de}`); process.exit(1); }
 if (!SECO) mkdirSync(para, { recursive: true });
 
-let novos = 0, mudados = 0, iguais = 0;
-const mudou = [];
+let novos = 0, mudados = 0, iguais = 0, barrados = 0;
+const mudou = [], bloqueios = [];
 for (const f of md(de)) {
   const a = join(de, f), b = join(para, f);
+  const agora = ler(a) || "";
+
+  // GUARDIÃO: ao ENVIAR (disco → repo), nunca deixa segredo vivo ou memória sensível entrar no git
+  if (acao === "enviar" && f !== "MEMORY.md") {
+    const seg = varreSegredo(agora);
+    if (seg) { barrados++; bloqueios.push(`  ⛔ ${f} — ${seg.tipo} (${seg.trecho}) → cofre, não git`); continue; }
+    if (ehSensivel(agora) && !/secret\.mjs get/.test(agora)) {
+      barrados++; bloqueios.push(`  ⛔ ${f} — marcada sensitive:true sem ponteiro pro cofre`); continue;
+    }
+  }
+
   const antes = ler(b);
-  const agora = ler(a);
   if (antes === null) { novos++; mudou.push(`+ ${f}`); }
   else if (antes !== agora) { mudados++; mudou.push(`~ ${f}`); }
   else { iguais++; continue; }
   if (!SECO) copyFileSync(a, b);
+}
+if (bloqueios.length) {
+  console.log(`\n⛔ ${barrados} memória(s) BARRADA(s) do git (segredo vivo ou sensível):`);
+  bloqueios.forEach(b => console.log(b));
+  console.log(`   valor de segredo vive no cofre: node ferramentas/secret.mjs set <nome> --de-arquivo <memória>`);
 }
 
 // o que existe no DESTINO e não na origem: nunca apaga sozinho — só denuncia
