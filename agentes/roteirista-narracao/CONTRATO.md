@@ -94,7 +94,8 @@ vezes precisar.
 | o gancho da indicação aparece no texto narrado · sem tom de vendedor · ≤60 palavras | FAIL |
 | `auditoria.afirmacoes[]` existe e não está vazia | FAIL |
 | o placar bate com a contagem da lista | FAIL |
-| toda afirmação tem `fonte` nomeada · toda ressalva tem `nota` | FAIL |
+| toda afirmação tem `fonte` nomeada e `tier` (T1/T2/T3) · toda ressalva tem `nota` | FAIL |
+| corroboração por tier: T1 basta · T2 exige 2ª independente · T3 nunca sustenta sozinha | FAIL |
 | toda afirmação auditada aparece no texto narrado | FAIL |
 | contagem **real** de palavras narradas dentro da faixa do alvo | FAIL |
 | lista negra de vícios da marca | FAIL |
