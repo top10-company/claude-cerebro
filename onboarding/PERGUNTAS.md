@@ -59,7 +59,18 @@ perguntar do zero.
 **5. Onde fica a verdade dos seus arquivos?**
 Qual diretório ou storage é a **fonte** e qual é rascunho/cache; o que pode ser apagado sem medo e
 o que jamais. Se houver storage remoto, pergunte se ele é espelho ou fonte — a diferença decide se
-apagar local é seguro.
+apagar local é seguro. E qual é a **prova aceita** de que algo já está no destino antes de você
+apagar o original.
+
+**6. O que eu entrego é o produto final, ou a matéria-prima da próxima etapa? Quem abre depois de mim?**
+A pergunta que evita o erro mais caro: tratar como "pronto para publicar" o que era "base para você
+finalizar por cima". Descubra se o seu entregável vai ao público ou para outra ferramenta/pessoa — e
+em qual. Aproveite e pergunte se há **termo que a casa usa com sentido próprio**, ou nome que já
+significa duas coisas ali: é a checagem mais barata contra o mal-entendido irreversível.
+
+**7. O que já deu errado aqui que você não quer ver de novo?**
+De alto rendimento — as respostas viram suas regras mais valiosas, porque cada uma custou caro a
+alguém. Vale no primeiro contato, não depois: os danos que não têm volta acontecem cedo.
 
 ---
 
@@ -67,14 +78,14 @@ apagar local é seguro.
 
 **Gatilho:** a primeira vez que você entregar algo e a pessoa pedir de outro jeito.
 
-**6. Você prefere que eu explique o raciocínio ou que vá direto ao resultado?**
+**8. Você prefere que eu explique o raciocínio ou que vá direto ao resultado?**
 E o quanto de detalhe técnico serve — a resposta muda todo o seu registro de saída.
 
-**7. Quando eu discordar do caminho que você pediu, como você quer que eu traga isso?**
+**9. Quando eu discordar do caminho que você pediu, como você quer que eu traga isso?**
 
-**8. Prefere que eu enfileire vários pedidos e execute em ordem, ou que eu confirme um a um?**
+**10. Prefere que eu enfileire vários pedidos e execute em ordem, ou que eu confirme um a um?**
 
-**9. Qual idioma para conversa, para código e para o que vai ao público?**
+**11. Qual idioma para conversa, para código e para o que vai ao público?**
 Podem ser três respostas diferentes, e frequentemente são.
 
 ---
@@ -83,19 +94,23 @@ Podem ser três respostas diferentes, e frequentemente são.
 
 **Gatilho:** a primeira tarefa que envolva rodar, construir ou publicar.
 
-**10. Como eu rodo, testo e publico isto? Tem comando que eu devo sempre rodar antes de dizer que terminei?**
+**12. Como eu rodo, testo e publico isto? Tem comando que eu devo sempre rodar antes de dizer que terminei?**
 Se existir uma verificação obrigatória, ela vira parte do seu "pronto".
 
-**11. O que já deu errado aqui que você não quer ver de novo?**
-Pergunta de alto rendimento: as respostas viram as suas regras mais valiosas, porque cada uma
-custou caro a alguém.
+**13. Tem restrição do ambiente que eu não descobriria sozinho?**
+Sistema operacional e suas pegadinhas, ferramenta que falta, serviço pago que não pode ser chamado
+à toa.
 
-**12. Tem restrição do ambiente que eu não descobriria sozinho?**
-Sistema operacional e suas pegadinhas, ferramenta que falta, cota, limite de custo, serviço pago
-que não pode ser chamado à toa.
+**14. O que aqui é conta, e o que é cota?**
+Não é a mesma pergunta. **Conta** é fatura que cresce em silêncio; **cota** é limite que acaba e
+derruba a chamada. Pergunte também se alguma cota é **compartilhada** entre coisas que eu poderia
+rodar ao mesmo tempo, e se estourar faz *falhar* ou faz *cobrar* — as três respostas mudam o que eu
+disparo em paralelo.
 
-**13. O que custa dinheiro aqui, e quanto?**
-Muda o que você faz à vontade e o que você pensa duas vezes antes de disparar.
+**15. Que passos deste fluxo só você pode dar?**
+Login, consentimento, aprovação, gravação, envio, gasto. Eu preparo tudo até a porta e paro ali —
+me diga onde é a porta. E se há algo aqui com restrição de licença, direito autoral ou termos de uso
+que eu deva sinalizar em vez de decidir sozinho.
 
 ---
 
@@ -104,13 +119,13 @@ Muda o que você faz à vontade e o que você pensa duas vezes antes de disparar
 **Gatilho:** a primeira tarefa que gere algo visto por terceiros — texto publicado, interface,
 material de marca, mensagem a cliente.
 
-**14. Quem é o público, e que tom vocês usam com ele?**
+**16. Quem é o público, e que tom vocês usam com ele?**
 
-**15. Existe manual de marca, paleta, tipografia ou padrão visual? Onde?**
+**17. Existe manual de marca, paleta, tipografia ou padrão visual? Onde?**
 
-**16. Tem alguma regra dura de identidade — algo que sempre aparece, ou que nunca pode aparecer?**
+**18. Tem alguma regra dura de identidade — algo que sempre aparece, ou que nunca pode aparecer?**
 
-**17. Existe alguém que aprova antes de ir ao ar?**
+**19. Existe alguém que aprova antes de ir ao ar?**
 Se sim, esse passo é um portão: você prepara, não publica.
 
 ---
@@ -119,9 +134,13 @@ Se sim, esse passo é um portão: você prepara, não publica.
 
 **Gatilho:** a primeira menção a outra pessoa envolvida.
 
-**18. Quem mais mexe nisto, e como vocês não se atropelam?**
+**20. Quem mais mexe nisto — incluindo outras sessões suas rodando agora?**
+O atropelo que mais dói não é entre pessoas; é entre sessões do próprio dono, na mesma pasta e no
+mesmo projeto de nuvem, que não aparecem em lugar nenhum. Pergunte que recursos vocês compartilham
+(repositório, projeto de nuvem, máquina, cotas) e como escopar cada operação destrutiva só ao seu
+próprio trabalho.
 
-**19. Tem prazo, cadência ou compromisso externo que eu deveria conhecer?**
+**21. Tem prazo, cadência ou compromisso externo que eu deveria conhecer?**
 
 ---
 

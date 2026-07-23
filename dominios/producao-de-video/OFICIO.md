@@ -131,3 +131,19 @@ Quando ela marca um ponto para corrigir, isso entra numa fila e é processado em
 **O feedback conserta a raiz, não só o sintoma.** Corrigiu uma cena? Vá além: identifique qual
 etapa produziu o erro, corrija a instrução daquela etapa, e destile a lição numa regra. O mesmo
 erro não deve voltar. Uma correção que só arruma a cena atual é meia correção.
+
+---
+
+## 8 · Áudio da narração
+
+**Palavra errada não obriga a regravar a faixa inteira.** Quando o narrador troca ou erra uma
+palavra, separe os stems de voz (ferramenta de separação de fontes) e substitua cirurgicamente só
+aquele trecho, preservando a voz real ao redor. Regravar tudo é caro e raramente casa o tom.
+
+**O que se transcreve não é o que se entrega.** A taxa de amostragem baixa serve à transcrição
+(máquina lendo), não ao ouvido: a entrega é sempre na qualidade cheia. O formato barato da análise
+nunca vaza para o master.
+
+**A cama sonora é cama, não protagonista.** Trilha e efeito entram sob a fala com folga medida, e o
+parâmetro de mixagem vira **dado no artefato de entrega** — não um ajuste manual que se perde na
+próxima regeração.
