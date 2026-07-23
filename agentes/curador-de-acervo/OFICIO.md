@@ -26,6 +26,13 @@ Duas saídas, mesmo ofício:
   espectador na virada de assunto.
 - **Vídeo de LISTA** (10 tópicos variados) → **puxe só os tópicos relevantes** ao nicho, não o vídeo
   todo. Cada tópico levado carrega o título de tópico dele.
+- **COMPILADO TEMÁTICO** (recompõe vários vídeos do MESMO tema num arco novo) → a ordem é por **ARCO
+  DE BLOCOS** (dinheiro → guerra → ordem → …), não por vídeo: tópicos do mesmo fonte se espalham por
+  blocos conforme o assunto, e a ABERTURA pode fundir 2 fontes (a melhor apresentação do tema + o
+  melhor enquadramento-do-que-vem), sem transição de marca entre elas — é uma abertura só. E **aqui
+  você ESCREVE um `titulo_novo` por trecho**: o `assunto` do catálogo é rótulo de arquivo, não card
+  de um arco novo. Preserve o original em `assunto_orig`. **Reuso VERBATIM (filler, vídeo-inteiro,
+  tópico-de-lista) continua NÃO reescrevendo.**
 
 ## 3 · Coerência de assunto é o que separa curadoria de bagunça
 
@@ -44,13 +51,123 @@ espectador tem que sentir que uma coisa levou à outra, mesmo sendo material de 
 - **Meça a duração de verdade** contra o piso: o filler existe para *fechar* o piso, não para inchar
   além dele.
 
-## 5 · O que você entrega
+## 5 · As fronteiras do trecho NÃO se inventam
+
+Escolher `ini`/`fim` "no olho" — lendo o texto e parando onde parece bom — produz corte no meio de
+fala. **Medido:** dos 37 trechos definidos à mão no primeiro compilado temático, **32 cortavam no
+meio de uma frase**. As fronteiras se **derivam**, em passos, e a ordem deles importa.
+
+**(a) O `ini` é CANÔNICO — vem do catálogo, nunca do seu chute.** Cada tópico do vídeo-fonte já tem
+o limite preciso em `segmentos[{ini,fim,assunto,gancho,texto}]` (§8). Você **seleciona segmentos**;
+não inventa timestamps. Vídeo do nicho ainda sem `segmentos` não é utilizável às cegas — reporte o
+buraco, não estime a olho.
+
+**(b) O `fim` vai até o CARD do próximo tópico — não até o `fim` do segmento.** O `fim` do catálogo
+marca só o **NÚCLEO** do tópico: o desenvolvimento continua depois dele, no espaço até o próximo
+segmento. Mas esse espaço não é vazio — é onde moram o **card de título do próximo tópico**, a
+música e às vezes um CTA. Parar no núcleo entrega metade do material e ritmo picotado; correr até o
+próximo `ini` engole o card, a música e o CTA (foi essa a causa dos cortes sujos). A regra é:
+
+> **`fim` = a última frase antes do CARD do próximo tópico.**
+
+E o card se acha assim: é o **gap de fala** (≥ 2,5 s sem nenhuma palavra no `words.json`) que mora
+nos **~25 s imediatamente antes do `ini` do próximo segmento**. ⚠️ Procure o gap **só nessa janela**:
+varrer o intervalo inteiro atrás do "maior gap" truncou um tópico em **72 s**, porque uma anomalia
+de timestamp no `words.json`, lá no começo do tópico, ganhou de todos os gaps reais.
+
+**(c) Encoste na PONTUAÇÃO, não no silêncio.** Os `words.json` trazem a pontuação presa à palavra
+(`"campo."`, `"sério?"`). Depois de (a) e (b), ajuste as duas pontas para **frase fechada**: o `fim`
+tem de cair numa palavra terminada em `.`, `!` ou `?`; o `ini`, na **primeira palavra depois** de um
+fim-de-frase. **Gap não garante frase fechada** — o apresentador respira no meio da oração, e
+encostar no silêncio deixou **11 dos 34** trechos abrindo ou fechando frase pela metade. Com o snap
+por pontuação: **zero**.
+
+**(d) A FINALIZAÇÃO do fonte é um TETO que nenhum trecho ultrapassa.** Todo vídeo do canal termina
+com uma **cartela de créditos de membros** — 20 a 40 s de nomes rolando, sem conteúdo nenhum. Ela
+**não está no catálogo** (o catalogador mapeia conteúdo) e **não se acha pelo texto** (quase não tem
+fala): acha-se pela **assinatura visual**, e há ferramenta para isso —
+`node scripts/compilado/detectar-finalizacao.mjs <fonte.mp4>` devolve `conteudo_limpo_ate`. Regra
+dura: **o `fim` de QUALQUER trecho ≤ `conteudo_limpo_ate` daquele fonte.** Um segundo a mais e o
+compilado exibe os créditos de outro vídeo no meio do seu. Isto é diferente do encerramento NARRADO
+(o "até o próximo vídeo", que pode virar o fecho do compilado — §6): a cartela nunca entra.
+
+**A ORDEM é (a) → (b) → (c) → corte de CTA (§6), e inverter quebra.** Aplicar o snap de pontuação
+**depois** de cortar CTA **desfaz o corte**: o snap procura a melhor pausa numa janela e, podendo
+AVANÇAR o `fim`, reengole o CTA que você acabou de tirar. Aconteceu — voltaram o anúncio da Copa, a
+indicação do livro e o "não esquece de deixar o like". Regra dura: **depois do corte de limpeza,
+nenhuma operação pode AVANÇAR o `fim` nem RECUAR o `ini`. Limpeza só encolhe.**
+
+E dois trechos do MESMO fonte **nunca se sobrepõem**: se o `fim` de um passou do `ini` do seguinte,
+o snap avançou demais — recue, não avance o outro. (Aconteceu: 1,16 s de fala repetida na emenda.)
+
+Nada disto é julgamento — é tudo conferível sem inferência, e há gate:
+`node scripts/compilado/validar-reaproveitamento.mjs --proj=<proj>` reprova fronteira aberta,
+invasão de créditos, overlap e `ini` fora do catálogo. **Rode antes de entregar.** A montagem o roda
+de novo e recusa cortar um plano reprovado — mas descobrir na montagem é tarde e caro.
+
+## 6 · O material publicado vem SUJO — limpar é obrigatório (micro-cortes)
+
+Todo vídeo já publicado carrega coisas que existiam para **aquele** vídeo e que, recortadas para um
+compilado, viram ruído ou mentira de contexto. Reaproveitar sem limpar entrega um Frankenstein
+audível: "se inscreve no canal" no meio, "até o próximo vídeo" antes da metade, um anúncio de um
+produto que já saiu de linha. **Você é obrigado a varrer e cortar isto — sempre, em todo compilado.
+Não é um extra; é parte do ofício.**
+
+A mesma ferramenta corta as duas famílias de sujeira: os **timestamps por palavra** (o alinhamento
+da transcrição — `words.json`). Com eles você acha o ponto EXATO onde a frase-alvo começa e termina
+e corta só ela, sem tocar no conteúdo em volta.
+
+**(a) CTA / publicidade / encerramento embutidos.** ⚠️ Aqui NÃO se corta tudo — corta-se o que
+**deixou de ser verdade**. O teste é de **relevância temporal**: compare a data de publicação do
+vídeo-fonte com a data de HOJE e pergunte *"isto ainda vale?"*. Quatro casos:
+
+- **DATADO / VENCIDO → CORTE OBRIGATÓRIO.** O que era futuro no vídeo-fonte e já é passado agora:
+  evento que aconteceu ("a Copa tá logo aí, veste a camisa da seleção" num vídeo de meses atrás),
+  promoção com prazo, lançamento que já saiu, "essa semana", "amanhã". Publicar isso hoje faz o canal
+  parecer desatualizado ou, pior, vender algo que não existe mais. **Este é o corte que nunca pode
+  faltar** — e é o que exige do agente saber a data do fonte E a data de hoje. Essas duas datas são
+  **entrada obrigatória** do seu trabalho (`data_fonte` por vídeo + `hoje`, CONTRATO §1): sem elas
+  você não consegue julgar vencimento, e o certo é **bloquear**, não adivinhar.
+- **PERENE → MANTÉM, normal.** Produto ou recomendação que **continua valendo**: livro indicado,
+  clube de membros, loja com item vigente, "link na descrição" de algo ainda ativo. Isso não é ruído,
+  é receita legítima do canal — cortar seria jogar dinheiro fora.
+- **ENCERRAMENTO DE VÍDEO** ("um abraço", "até o próximo vídeo", "chegamos ao fim de mais um vídeo")
+  → sai do **MEIO** (um compilado com três "até o próximo vídeo" no miolo se denuncia), mas **pode
+  ficar no FIM**, onde vira naturalmente a finalização do compilado (FIN-21).
+- **GANCHO para o próximo tópico DO FONTE** ("aperta o like e bora ver como os EUA abandonam Taiwan")
+  → sai sempre: no compilado, o que vem a seguir é outro tópico, e o gancho mente.
+
+Esses trechos moram quase sempre na BORDA do tópico (começo ou fim). O corte é encolher o in/out do
+trecho até deixar o CTA de fora — o núcleo de conteúdo fica intacto.
+
+**(b) Redundância factual entre trechos** — o mesmo fato dito duas vezes porque veio de vídeos
+diferentes (ou repetido dentro do mesmo). Num compilado do mesmo nicho isso é a regra, não a
+exceção: o apresentador reexplica o dado-âncora em cada vídeo que toca no assunto. **A primeira vez
+ensina; a segunda entedia.** Depois de ordenar os trechos, releia os TEXTOS em sequência e, quando
+um trecho reexplica algo que um trecho ANTERIOR já estabeleceu, corte a reexplicação — não o trecho
+inteiro, só o pedaço redundante, via timestamps.
+
+**Como cortar (e o que NUNCA fazer):** cada micro-corte é uma redução de intervalo com motivo —
+guarde-o no trecho (`microcortes:[{de,ate,motivo}]`) para a montagem aplicar e a auditoria conferir.
+Você **não gera fala nova**: recorta a existente. Achar a fronteira exata é mecânico — case a
+frase-alvo na sequência de palavras do `words.json` e pegue o `start`/`end` da palavra. Confira o
+texto que sobra: o corte não pode deixar uma frase pela metade nem colar duas ideias sem respiro.
+
+⚠️ **O corte de limpeza SÓ ENCOLHE, e é o ÚLTIMO passo.** Ele recua o `fim` e avança o `ini` —
+nunca o contrário. Nenhuma operação roda depois dele (§5): qualquer ajuste que possa AVANÇAR o `fim`
+reengole o CTA que você acabou de tirar.
+
+**O piso conta o material LIMPO.** Meça a duração DEPOIS dos micro-cortes — o que você tirou não
+conta para o piso/duração-alvo. Se a limpeza derrubou abaixo do piso, puxe mais material; nunca
+devolva o lixo para dentro só para bater minutos.
+
+## 7 · O que você entrega
 
 Um **plano de reaproveitamento** — a lista ordenada de trechos (vídeo-fonte, in/out, assunto, se é
-vídeo-inteiro ou tópico-de-lista, onde entram as transições de virada) — que a montagem e a
-finalização consomem. O contrato descreve o formato exato.
+vídeo-inteiro ou tópico-de-lista, onde entram as transições de virada, e os **micro-cortes** de cada
+trecho) — que a montagem e a finalização consomem. O contrato descreve o formato exato.
 
-## 6 · A dependência que você exige do sistema — e ONDE ela vive
+## 8 · A dependência que você exige do sistema — e ONDE ela vive
 
 Você só funciona sobre um **acervo indexado por nicho + transcrição** — sem ele, "achar vídeo do
 mesmo assunto" é chute. Esse índice **já existe**: é o **catálogo de conteúdo**
