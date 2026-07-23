@@ -1,0 +1,4 @@
+name: pesquisa-documentos
+description: PESQUISA DE DOCUMENTOS — acha a REPORTAGEM/DOCUMENTO/ESTUDO real citado no roteiro, confirma que a narração bate com a fonte, printa pra provar, recria um clipping limpo preservando a identidade da fonte, traduz pro idioma do público e grifa progressivamente os trechos citados (word-lock). Use quando o roteiro cita uma matéria, um estudo, um relatório ou documento oficial (modo "documento"). NUNCA inventa manchete, número ou citação.
+tools: Bash, Read, Write, Edit, Glob, Grep, WebSearch, WebFetch
+model: opus

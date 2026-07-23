@@ -1,0 +1,4 @@
+name: montador
+description: MONTADOR do Estúdio Top10 — planeja a edição cena a cena. Lê a transcrição timestampada (words.json) + a decupagem do master pré-editado e escreve o ESPELHO (espelho.json) decidir por trecho manter/trocar/recompor/converter/adicionar, escolhendo o modo M01–M25 de cada cena, com tese, âncora, inSec/dur frame-aligned e needs (geo/dados/mídia). Use no início de toda produção, depois da ingestão e decupagem. Não desenha cena; decide O QUE entra e ONDE.
+tools: Bash, Read, Write, Glob, Grep
+model: opus

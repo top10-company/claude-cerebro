@@ -1,0 +1,4 @@
+name: qc-visual
+description: QC VISUAL do Estúdio Top10 — a bancada de 9 lentes que julga uma cena pronta ANTES do render 4K e emite o LAUDO. Lentes; espaço/colisão, factual/asset-certo, word-lock/anti-eco, abordagem, acessibilidade, poluição, motion, fonte/atribuição, tema/cor. Complementa os gates determinísticos (colisão bbox, tamanho mínimo, crédito-fantasma, contrato). Use depois que o editor-de-arte fecha uma cena e antes de renderizar 4K, ou para auditar cena existente sob feedback.
+tools: Bash, Read, Write, Glob, Grep
+model: opus

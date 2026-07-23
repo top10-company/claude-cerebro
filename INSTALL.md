@@ -31,6 +31,21 @@ resto vive nos repositórios, e por isso:
 - **as duas máquinas ficam idênticas** — nada mora só num disco;
 - **contribuir é `git push`** — o que você aprender numa máquina vale na outra amanhã.
 
+**3. Instale os agentes — a equipe de profissionais formados.** Este cérebro traz especialistas
+prontos em `agentes/` (cada um é um OFÍCIO×CONTRATO reutilizável, contratável por qualquer marca).
+Instale **todos** de uma vez:
+
+```bash
+node ~/claude-cerebro/ferramentas/instalar-agentes.mjs        # em ~/.claude/agents (global)
+node ~/claude-cerebro/ferramentas/instalar-agentes.mjs --dest=./.claude/agents   # só neste projeto
+```
+
+Isso gera um carregador **auto-contido** em `~/.claude/agents/<nome>.md` por profissional (OFÍCIO +
+CONTRATO embutidos, sem depender de caminhos). É **vivo**: quando um agente novo entra no cérebro,
+`git pull` + reinstalar o traz sozinho — nunca há lista manual pra manter. **Reinstale após todo
+`git pull` que traga agente novo.** Se o projeto tem `marcas/<marca>/agentes/<nome>.md`, o agente
+lê essa roupa por cima do ofício puro.
+
 ### Windows
 
 Igual, com os caminhos do sistema. O arquivo de instruções globais fica em
@@ -78,6 +93,15 @@ Na dúvida: escreva a regra sem citar nome nenhum. Se ela continuar de pé, é d
 nucleo/
   CLAUDE.md        o método — postura, verdade, custo, versionamento, memória
   CARREGADOR.md    as ~15 linhas que vão pro ~/.claude/CLAUDE.md de cada máquina
+agentes/           a EQUIPE — um profissional formado por pasta (instale com ferramentas/)
+  <nome>/
+    OFICIO.md      o que sabe, o rigor, o que RECUSA fazer
+    CONTRATO.md    entrada · saída · o que valida antes de entregar
+    meta.yml       name/description/tools/model (o frontmatter do carregador)
+ferramentas/
+  instalar-agentes.mjs   gera ~/.claude/agents/ de TODOS os profissionais — vivo
+  memoria-sync.mjs       versiona a memória
+  secret.mjs             cofre (Google Secret Manager)
 onboarding/
   PERGUNTAS.md     o que perguntar a quem chega sem contexto, em blocos com gatilho
 dominios/
@@ -85,3 +109,5 @@ dominios/
 ```
 
 `dominios/` é opcional e modular: quem não trabalha com aquele ofício simplesmente não carrega.
+`agentes/` cresce sozinho: criar um profissional é adicionar uma pasta com `OFICIO.md` + `CONTRATO.md`
++ `meta.yml` — o instalador o distribui no próximo run, sem tocar em lista nenhuma.

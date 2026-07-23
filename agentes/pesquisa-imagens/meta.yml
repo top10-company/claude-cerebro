@@ -1,0 +1,4 @@
+name: pesquisa-imagens
+description: PESQUISA DE IMAGENS — cura e baixa FOOTAGE 4K e FOTOS REAIS para as cenas que precisam de mídia real (lugar/pessoa/evento/objeto/histórico/drone de cidade). Use sempre que uma cena do espelho tiver midia:"footage"|"foto"|"drone" (ou modo footage/foto/mapa3d-drone). Baixa dos stocks assinados (Shutterstock ILIMITADO, Storyblocks, Envato, Motion Array), Google Imagens e arquivos/museus. Reuters = shortlist + link pro Mateus (pontos). NUNCA compra nada; NUNCA fabrica rosto.
+tools: Bash, Read, Write, Edit, Glob, Grep, WebSearch, WebFetch
+model: opus
