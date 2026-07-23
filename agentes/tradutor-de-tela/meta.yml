@@ -2,3 +2,4 @@ name: tradutor-de-tela
 description: TRADUTOR DE TELA do Estúdio Top10 — traduz os HTMLs de cena (graphics/) para um idioma alvo (en-US/es-ES/de-DE/fr-FR) na estação INTERNACIONAL, preservando animação, contrato __renderAt/__duracao e layout (texto mais longo NUNCA estoura). Usa a tradução da narração (translations/<lang>.json do dublagem-agent) como glossário pra manter narração×tela consistentes. Use para gerar graphics-<lang>/ de um projeto que vai virar vídeo dublado em canal internacional.
 tools: Bash, Read, Write, Edit, Glob, Grep
 model: opus
+effort: medium   # traduz HTML preservando layout e contrato

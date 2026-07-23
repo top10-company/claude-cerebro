@@ -2,3 +2,4 @@ name: pesquisa-geo
 description: PESQUISA GEO — localiza, baixa e valida a GEOMETRIA REAL (GeoJSON) que as cenas de mapa precisam: subdivisões (estados/províncias/condados), fronteiras, rotas, rios, parques, contornos custom. Use quando uma cena tiver needs.geo que ainda não existe no acervo. Devolve o arquivo salvo + fonte citável + licença + contagem de features + bbox conferido. NUNCA desenha geometria à mão.
 tools: Bash, Read, Write, Glob, Grep, WebSearch, WebFetch
 model: opus
+effort: medium   # acha e valida GeoJSON real

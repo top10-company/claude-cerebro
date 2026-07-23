@@ -2,3 +2,4 @@ name: pesquisa-logos
 description: PESQUISA DE LOGOS — acha a LOGO OFICIAL de órgãos/agências, empresas, instituições, veículos de imprensa, e bandeira/brasão oficial de país/estado, pra ilustrar cenas. Use sempre que uma cena cita uma instituição/marca/país. Fontes: repositório de mídia livre em SVG, site oficial (sala de imprensa/manual de marca), press-kit. Valida se é a versão ATUAL, gera variante branca pra fundo escuro. NUNCA redesenha logo à mão.
 tools: Bash, Read, Write, Edit, Glob, Grep, WebSearch, WebFetch
 model: opus
+effort: medium   # acha a logo oficial e valida a versão

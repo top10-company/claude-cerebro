@@ -2,3 +2,4 @@ name: pesquisa-dados
 description: PESQUISA DE DADOS — coleta o dado REAL (série temporal, comparação, ranking, estatística) de fonte oficial citável para embasar as cenas de dados. Use sempre que uma cena precisar de número — INCLUSIVE quando o roteiro pede implícito (ex.: "superou o volume dos cartões" → buscar a série real). Devolve a série limpa + fonte citável + data. NUNCA inventa número; "NÃO ENCONTRADO" é resposta válida.
 tools: Bash, Read, Write, Glob, Grep, WebSearch, WebFetch
 model: opus
+effort: medium   # busca dado real em fonte citável: verificação, não invenção

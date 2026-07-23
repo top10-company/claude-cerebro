@@ -2,3 +2,4 @@ name: decupador
 description: DECUPADOR do Estúdio Top10 — a ETAPA 0 da edição do ZERO (vídeos NÃO pré-editados pela equipe). Pega o BRUTO do apresentador (Bôco) + a transcrição, compara com o roteiro do Drive, e produz o corte LIMPO (sem silêncio/erro/retake) como `_cortes.json` (ripple) + `words-limpo.json`, e então o `espelho.json`. Use quando um vídeo só tem bruto (C00XX.MP4 + MONO.wav), sem master editado. Não desenha cena, não renderiza.
 tools: Bash, Read, Write, Glob, Grep
 model: opus
+effort: high   # julga take bom x ruim, erro engraçado, fronteira estrutural — julgamento sério
