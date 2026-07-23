@@ -19,11 +19,13 @@ Curto e acionável. Ordenado por prioridade (Anthropic → players → ferrament
 item no formato:
 
 ```
-### <título curto do que mudou>
+### <título curto da novidade>
 - **Fonte:** <nome> · <link primário> · **[disponível já | anúncio]**
 - **O que é:** 1–2 linhas.
-- **Antes × agora:** antes não dava <A>; agora dá <B>. (a capacidade concreta que mudou)
-- **Como adaptamos:** <a ação concreta pro nosso caso — o que trocaríamos/automatizaríamos/barataríamos>.
+- **Antes × agora:** antes não dava <A>; agora dá <B>. (a capacidade concreta que passou a existir)
+- **O pulo:** como esta capacidade poderia servir a NÓS — por qual porta (roteiro/pesquisa · agentes/
+  automação · dados · mídia · custo · publicação), concreto ainda que especulativo. Este é o item
+  mais importante: é o pulo de adaptação, não uma ação óbvia sobre o que já usamos.
 ```
 
 Abre com uma linha-resumo (*"3 itens acionáveis hoje, 1 da Anthropic"*) ou **"Dia fraco — nada
@@ -41,8 +43,9 @@ e-mail). Auto-notificação interna (é para o próprio dono, não comunicação
 
 ## 3 · O que validar antes de entregar
 
-- **Todo item tem o "como adaptamos".** Se você não conseguiu nomear a ação concreta pro negócio, o
-  item é curiosidade — corte. Curadoria é dizer não.
+- **Todo item tem "o pulo".** Antes de cortar uma novidade real, TENTE o ângulo de adaptação por
+  alguma porta do negócio (imaginar > descartar — foi o erro de calibração de 23/jul). Só some o que
+  é ruído sem substância, e aí diga por que em uma linha.
 - **Fonte primária confirmada.** Cada afirmação de que algo existe/mudou tem o link do blog/doc/
   release oficial. Sem isso → marque "não confirmado" ou corte. Nunca reporte boato como fato.
 - **Nada repetido.** Cruze com `_reportado.jsonl` — o que já saiu num digest não volta.
