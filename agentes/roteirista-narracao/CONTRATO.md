@@ -57,8 +57,19 @@ roteiro out/<proj>/roteiro.json`). Campos obrigatórios: `proj`, `tema`, `titulo
 é daqui que o gate lê o formato), `fontes`, `packaging` (os títulos propostos, o ângulo de cada um,
 qual é o recomendado e o `alcance`), `obs` (decisões e sugestão de miniatura).
 
-⚠️ **O `auditoria` do manifest é só o PLACAR** — três inteiros (`ok`, `ressalvas`, `imprecisos`) e o
-schema é fechado. **A lista auditada vive no dossiê (§2.2)**, nunca aqui.
+⚠️ **O `auditoria` do manifest tem o placar E A LISTA.** Além dos três inteiros (`ok`,
+`ressalvas`, `imprecisos`), `auditoria.afirmacoes[]` traz uma entrada por afirmação verificável:
+`{ afirmacao, veredito: ok|ressalva|impreciso, fonte, url?, nota? }`. O placar é **derivado** dela.
+
+Isto mudou em 23/jul, e a razão é medida: a lista era mandada para o dossiê em prosa, e **0 de 35
+roteiros** a tinham. O `critico-de-roteiro` julga a lente factual CONTRA a lista ("placar sem lista
+já não é auditoria") — sem ela, a lente vira opinião, e o placar auto-relatado já deixou passar
+"Subaru no Japão" (fica no Havaí) e "750 episódios" (eram ~800).
+
+Prosa num dossiê não é verificável; JSON é. O gate confere que o placar bate com a lista, que toda
+afirmação tem fonte nomeada, que toda ressalva diz o que é condicional, e que a afirmação auditada
+**existe no texto narrado** — lista escrita de memória reprova. O dossiê pode repetir a lista em
+prosa para leitura humana, mas a fonte é o manifest.
 
 ### 2.4 · O cache canônico
 ```
@@ -79,6 +90,10 @@ vezes precisar.
 | as 4 saídas existem | FAIL |
 | o manifest passa no schema | FAIL |
 | `auditoria.imprecisos == 0` (nenhum ❌ sobrou) | FAIL |
+| `auditoria.afirmacoes[]` existe e não está vazia | FAIL |
+| o placar bate com a contagem da lista | FAIL |
+| toda afirmação tem `fonte` nomeada · toda ressalva tem `nota` | FAIL |
+| toda afirmação auditada aparece no texto narrado | FAIL |
 | contagem **real** de palavras narradas dentro da faixa do alvo | FAIL |
 | lista negra de vícios da marca | FAIL |
 | marcador de introdução e de encerramento presentes | FAIL |
