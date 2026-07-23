@@ -90,6 +90,8 @@ vezes precisar.
 | as 4 saídas existem | FAIL |
 | o manifest passa no schema | FAIL |
 | `auditoria.imprecisos == 0` (nenhum ❌ sobrou) | FAIL |
+| `shopping` existe (com produto+gancho, OU `produto:null`+`motivo`) | FAIL |
+| o gancho da indicação aparece no texto narrado · sem tom de vendedor · ≤60 palavras | FAIL |
 | `auditoria.afirmacoes[]` existe e não está vazia | FAIL |
 | o placar bate com a contagem da lista | FAIL |
 | toda afirmação tem `fonte` nomeada · toda ressalva tem `nota` | FAIL |
