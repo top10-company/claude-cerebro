@@ -30,8 +30,13 @@ pergunta "isso é do nosso ramo?"; pergunta **"que porta isso abre, e o que dela
 - **Técnicas e métodos** — otimização, **cache** (ex.: um método novo de cache da Anthropic que o
   usuário precisa ativar), RAG, prompting, orquestração de agentes, fine-tuning barato.
 - **IA de mídia** — vídeo, imagem, voz, dublagem, lip-sync: o nosso ofício direto.
-- **A casa (Anthropic) primeiro** — é a nossa stack, então tudo que ela lança tem peso extra. Mas
-  *tudo* dela, não só o changelog do Claude Code: plataformas, modelos, capacidades, preços.
+- **A casa (Anthropic) primeiro, e nos DOIS eixos:**
+  (a) **a mecânica do Claude Code** — recursos que mudam como orquestramos os agentes: subagentes,
+  skills, MCP, hooks, background, output styles, limites (ex.: cap de subagentes por sessão), e
+  **métodos que o usuário precisa ativar** (um cache novo, um flag). É a ferramenta que roda o
+  estúdio — importantíssimo, reporte sempre e fundo;
+  (b) **plataformas, produtos e modelos** dela — Claude Science, a API (caching, batch, tool use),
+  preços, capacidade. Tudo da Anthropic pesa extra.
 - Depois **OpenAI, Google/DeepMind, Meta, Mistral, xAI**, e o **ferramental/comunidade** (o que as
   pessoas descobriram fazer — os "A com B" que ninguém anunciou).
 
