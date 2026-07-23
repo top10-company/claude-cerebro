@@ -38,8 +38,21 @@ Array de spans em **segundos, tempo-BRUTO** (antes do ripple):
 
 ### 2.2 · A fala limpa — `out/<proj>/words-limpo.json`
 
-O `words.json` menos as palavras que caem dentro dos cortes, no mesmo formato. É o que o espelho e todas
-as etapas seguintes usam como narração real.
+O `words.json` menos as palavras que caem dentro dos cortes, no mesmo formato e no **mesmo relógio**
+(tempo-BRUTO — quem aplica o ripple é quem monta a timeline). É o que o espelho e todas as etapas
+seguintes usam como narração real.
+
+⚠️ **NÃO escreva este arquivo à mão.** Ele é 100% derivável do `words.json` + `_cortes.json`, e
+transcrever 1.500–2.500 palavras é trabalho de script pago em inferência — com o agravante de que uma
+palavra trocada no meio não tem como ser notada por ninguém. Rode:
+
+```bash
+node scripts/decupagem/aplicar-cortes.mjs <proj>     # deriva + valida (ou: top10 decupar <proj> --cortes)
+```
+
+O script também **executa as checagens da tabela §3** que dependiam de você lembrar: a conta fechar,
+toda borda cair entre palavras, e nenhum dangler ter sobrado. Se ele reprovar, o defeito está no
+`_cortes.json` — conserte as bordas ali e rode de novo.
 
 ### 2.3 · O sync, quando há dois aparelhos — `out/<proj>/_decupagem/sync.json`
 
@@ -70,19 +83,19 @@ Sobre o **texto limpo**. Contrato completo em `cerebro/agentes/montador/CONTRATO
 
 | # | Checagem | Como |
 |---|---|---|
-| 1 | **A conta fecha**: `words == words-limpo + palavras dentro dos cortes`, exato, 0 vazamento | comparação direta dos três arquivos |
-| 2 | **Toda borda cai em silêncio**, nunca no meio de palavra | conferir `ini`/`fim` contra as fronteiras de palavra do `words.json` |
-| 3 | **Nenhum dangler** sobrou antes de um corte | ler a palavra imediatamente anterior a cada `ini` |
+| 1 | **A conta fecha**: `words == words-limpo + palavras dentro dos cortes`, exato, 0 vazamento | `node scripts/decupagem/aplicar-cortes.mjs <proj>` |
+| 2 | **Toda borda cai em silêncio**, nunca no meio de palavra | idem — o script mede contra as fronteiras de palavra |
+| 3 | **Nenhum dangler** sobrou antes de um corte | idem — o script pesca token abortado e palavra repetida na fronteira |
 | 4 | Spans **disjuntos**, ordenados, dentro da duração do bruto | leitura do `_cortes.json` |
 | 5 | **A narração limpa lê coerente de ponta a ponta** | reconstruir o texto de `words-limpo.json` e LER |
 | 6 | Nenhuma cena do espelho cai dentro de um corte | cruzar `inSec`/`dur` com os spans |
 | 7 | O espelho passa no contrato | `node scripts/validar-contrato.mjs espelho out/<proj>/espelho.json` |
 | 8 | Sync com confiança aceitável, ou o aviso registrado | `_decupagem/sync.json` |
 
-⚠️ **Gate de plano dá FALSO-POSITIVO neste fluxo.** `scripts/checar-plano.mjs` mede em tempo-BRUTO e
-**não lê o `_cortes.json`** — conta as regiões cortadas como "apresentador" e como "buracos",
-reportando ~30–40% de rosto onde o real é ~10–15%. Calcule descontando os cortes; não reporte o número
-cru. (Melhoria pendente: fazer o `checar-plano` ler o `_cortes.json`.)
+⚠️ **Cena dentro de corte some da entrega.** O `timeline-xml` descarta silenciosamente a cena cujo
+`inSec` cai num span cortado — exceto o card de título, que mora no corte por desenho. Quem verifica é
+`node scripts/qc-espelho-fala.mjs <proj>`, que ainda cruza a `ancora` de cada cena com a transcrição e
+diz **onde** a fala realmente acontece. Rode antes de entregar o espelho.
 
 ## 4 · Bloqueio
 
