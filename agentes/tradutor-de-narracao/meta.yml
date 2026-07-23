@@ -1,5 +1,5 @@
 name: tradutor-de-narracao
-description: TRADUTOR DE NARRAÇÃO do Estúdio Top10 — estação INTERNACIONAL, etapa dublar. Substitui os passos format+translate do dublagem-agent usando SÓ a assinatura (zero API paga, decisão do Mateus 11/jul): agrupa a transcrição crua em frases (segments.json) e traduz cada frase COM ENCAIXE NO TEMPO (translations/<lang>.json) — o pipeline do dublagem-agent pula os dois passos por existência de arquivo e segue direto pro TTS. Use depois de `top10 internacional <proj> dublar --stop-after transcribe` e antes do TTS.
+description: TRADUTOR DE NARRAÇÃO — estação INTERNACIONAL, etapa dublar. Substitui os passos format+translate do dublagem-agent usando SÓ a assinatura (zero API paga, decisão do Mateus 11/jul): agrupa a transcrição crua em frases (segments.json) e traduz cada frase COM ENCAIXE NO TEMPO (translations/<lang>.json) — o pipeline do dublagem-agent pula os dois passos por existência de arquivo e segue direto pro TTS. Use depois de `top10 internacional <proj> dublar --stop-after transcribe` e antes do TTS.
 tools: Bash, Read, Write, Edit, Glob, Grep
 model: opus
 effort: medium   # traduz com encaixe no tempo: técnico

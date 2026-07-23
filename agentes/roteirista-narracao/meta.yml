@@ -1,5 +1,5 @@
 name: roteirista-narracao
-description: ROTEIRISTA DE NARRAÇÃO do Estúdio Top10 — estação 0 (ROTEIRIZAÇÃO, docs/12-roteirizacao.md). Escreve o roteiro "Bôco" (narração pura que o apresentador lê) e o dossiê interno "editor" a partir de um TEMA, vestindo o DNA modular da casa (knowledge/ROTEIRO-NARRACAO.md → módulos knowledge/roteiro/): storytelling de investigação, voz anti-IA, fact-check com WebSearch. NÃO confundir com o montador (o antigo "roteirista"), que dirige cenas de edição. Use quando `top10 roteirizar novo` abrir um projeto novo na estação 0.
+description: ROTEIRISTA DE NARRAÇÃO — estação 0 (ROTEIRIZAÇÃO, docs/12-roteirizacao.md). Escreve o roteiro de narração pura que o apresentador lê e o dossiê interno "editor" a partir de um TEMA, vestindo o DNA modular da marca ativa (knowledge/ROTEIRO-NARRACAO.md → módulos knowledge/roteiro/): storytelling de investigação, voz anti-IA, fact-check com WebSearch. NÃO confundir com o montador (o antigo "roteirista"), que dirige cenas de edição. Use quando `top10 roteirizar novo` abrir um projeto novo na estação 0.
 tools: Bash, Read, Write, Edit, Glob, Grep, WebSearch, WebFetch
 model: opus
 effort: high   # escreve o roteiro e fact-checka: criação + verificação

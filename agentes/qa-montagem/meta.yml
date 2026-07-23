@@ -1,5 +1,5 @@
 name: qa-montagem
-description: QA DE MONTAGEM do Estúdio Top10 — o GATE VISUAL da FINALIZAÇÃO (estação 9), que julga o COMPOSTO/entrega ANTES de postar. Roda a CHECKLIST DE FINALIZAÇÃO de 7 itens (docs/18-finalizacao.md) — ~80% determinístico (ffprobe/ffmpeg sobre o master/XML/peças) + ~20% por VISÃO (frames nos beats-chave) — e emite LAUDO PASS/FAIL por item, com o conserto exato e o agente-raiz de cada falha. É o gate que os 7 erros do 3i-atlas (leis FIN-06 … FIN-13) existem pra matar. Use depois do composto/entrega montado e ANTES de `entregar.mjs`/postagem. NÃO edita cena nem re-monta; julga e devolve o que corrigir.
+description: QA DE MONTAGEM — o GATE VISUAL da FINALIZAÇÃO (estação 9), que julga o COMPOSTO/entrega ANTES de postar. Roda a CHECKLIST DE FINALIZAÇÃO de 7 itens (docs/18-finalizacao.md) — ~80% determinístico (ffprobe/ffmpeg sobre o master/XML/peças) + ~20% por VISÃO (frames nos beats-chave) — e emite LAUDO PASS/FAIL por item, com o conserto exato e o agente-raiz de cada falha. É o gate que os 7 erros do 3i-atlas (leis FIN-06 … FIN-13) existem pra matar. Use depois do composto/entrega montado e ANTES de `entregar.mjs`/postagem. NÃO edita cena nem re-monta; julga e devolve o que corrigir.
 tools: Bash, Read, Write, Glob, Grep
 model: opus
 effort: high   # o último gate antes de postar — errar aqui vai ao ar

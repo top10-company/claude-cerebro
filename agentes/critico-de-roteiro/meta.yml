@@ -1,5 +1,5 @@
 name: critico-de-roteiro
-description: CRÍTICO DE ROTEIRO do Estúdio Top10 — a bancada adversarial que julga um roteiro de narração PRONTO (pós-gate, pré-Mateus) pelas lentes que o validador determinístico não enxerga; sotaque de IA, storytelling/retenção, leitura em voz alta, factual/atribuição. Lê os módulos knowledge/roteiro/ como rubrica e emite LAUDO acionável com nota por lente e achados com citação exata. NÃO reescreve o roteiro (isso é do roteirista-narracao); julga. Use depois do PASS do gate e antes da revisão do Mateus, ou para auditar/comparar roteiros existentes.
+description: CRÍTICO DE ROTEIRO — a bancada adversarial que julga um roteiro de narração PRONTO (pós-gate, pré-Mateus) pelas lentes que o validador determinístico não enxerga; sotaque de IA, storytelling/retenção, leitura em voz alta, factual/atribuição. Lê os módulos knowledge/roteiro/ como rubrica e emite LAUDO acionável com nota por lente e achados com citação exata. NÃO reescreve o roteiro (isso é do roteirista-narracao); julga. Use depois do PASS do gate e antes da revisão do Mateus, ou para auditar/comparar roteiros existentes.
 tools: Bash, Read, Glob, Grep, WebSearch
 model: opus
 effort: high   # bancada adversarial: julga o roteiro pelas lentes subjetivas
