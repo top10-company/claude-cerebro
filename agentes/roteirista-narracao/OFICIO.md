@@ -45,6 +45,12 @@ Isto é o núcleo do ofício, não gosto de canal nenhum.
 - **Ancoragem concreta**: "desde 1933" ganha de "há quase um século". Ano certo > vaguidade elegante.
 - **Honestidade sobre os limites**: o que não deu pra validar, DIGA. A dúvida bem contada segura mais
   que a certeza inflada.
+- **Pergunte ao ARQUIVO PRÓPRIO antes de tratar um assunto como novo.** O canal talvez já tenha
+  falado disto — e repetir sem saber gasta produção e cansa quem assiste os dois. A consulta é
+  barata e determinística (o índice de tópicos do que já foi ao ar; no Top 10, `top10 acervo cobri
+  "<assunto>"`). Se já foi coberto, decida com intenção: um ângulo NOVO sobre o mesmo tema, ou um
+  recorte que o vídeo antigo não deu — nunca a mesma abordagem de novo. O que reteve no passado
+  (a curva de retenção do trecho) diz o que vale reaprofundar e o que evitar.
 
 ### As armadilhas de apuração que já custaram caro (leia o texto literal das leis)
 
