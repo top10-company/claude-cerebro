@@ -18,9 +18,21 @@
  *   node memoria-sync.mjs puxar    [--seco]   repositório → disco (na outra máquina)
  *   node memoria-sync.mjs conferir            só relata: links mortos, órfãos, divergência
  *
+ * ABRANGÊNCIA: percorre TODOS os projetos com memória, não só o maior. Cada um vira uma subpasta
+ * no repo, espelhando o disco:
+ *
+ *     ~/.claude/projects/<slug>/memory/*.md   ⇄   <CLAUDE_CONTEXTO>/memoria/<slug>/*.md
+ *
+ * A subpasta preserva de onde a memória veio — é o que permite ao `puxar` devolver cada arquivo ao
+ * projeto certo, e o que impede os MEMORY.md (um índice por projeto) de colidirem entre si.
+ *
  * CONFIGURAÇÃO — variáveis de ambiente, com default sensato:
- *   CLAUDE_MEMORIA   pasta de memória do Claude   (default: ~/.claude/projects/<slug>/memory)
- *   CLAUDE_CONTEXTO  repositório de contexto      (default: ~/claude-contexto)
+ *   CLAUDE_MEMORIA   força UM projeto só           (default: todos em ~/.claude/projects/)
+ *   CLAUDE_CONTEXTO  repositório de contexto       (default: ~/claude-contexto)
+ *
+ * ⚠️ CLAUDE_CONTEXTO precisa apontar para um repositório GIT DE VERDADE. Se o default cair numa
+ * pasta solta, o script copia, manda rodar `git -C` nela, o comando falha — e a memória fica
+ * exatamente onde não devia: fora do versionamento. Foi o que aconteceu até 23/jul/2026.
  *
  * NUNCA apaga sem dizer. `puxar` só sobrescreve arquivo cujo conteúdo difere, e lista o que mudou.
  */
@@ -39,22 +51,31 @@ if (!["enviar", "puxar", "conferir"].includes(acao)) {
 const CONTEXTO = process.env.CLAUDE_CONTEXTO || join(homedir(), "claude-contexto");
 const DESTINO = join(CONTEXTO, "memoria");
 
-function acharMemoria() {
-  if (process.env.CLAUDE_MEMORIA) return process.env.CLAUDE_MEMORIA;
+// TODOS os projetos com memória — um por pasta em ~/.claude/projects/<slug>/memory.
+//
+// Antes daqui saía UM só: "a memória com mais arquivos, quase sempre a do trabalho principal".
+// Não era. Medido em 23/jul/2026: 207 memórias no disco espalhadas por 12 projetos, e só 93
+// versionadas — 114 nunca chegavam ao git, num script que existe justamente porque memória
+// perdida não volta. Quem escreve memória num projeto secundário não tinha backup nenhum.
+//
+// Cada projeto vira uma subpasta no repo (memoria/<slug>/), preservando de onde a memória veio:
+// sem isso o `puxar` não saberia onde devolver cada arquivo na outra máquina, e os MEMORY.md
+// (um índice por projeto) colidiriam entre si.
+function acharMemorias() {
+  if (process.env.CLAUDE_MEMORIA) {
+    return [{ slug: basename(join(process.env.CLAUDE_MEMORIA, "..")), dir: process.env.CLAUDE_MEMORIA }];
+  }
   const raiz = join(homedir(), ".claude", "projects");
-  if (!existsSync(raiz)) return null;
-  // sem projeto declarado, usa a memória com mais arquivos — quase sempre a do trabalho principal
-  const cands = readdirSync(raiz)
-    .map(d => join(raiz, d, "memory"))
-    .filter(p => existsSync(p))
-    .map(p => ({ p, n: readdirSync(p).filter(f => f.endsWith(".md")).length }))
-    .sort((a, b) => b.n - a.n);
-  return cands[0]?.p || null;
+  if (!existsSync(raiz)) return [];
+  return readdirSync(raiz)
+    .map(slug => ({ slug, dir: join(raiz, slug, "memory") }))
+    .filter(x => existsSync(x.dir) && readdirSync(x.dir).some(f => f.endsWith(".md")))
+    .sort((a, b) => a.slug.localeCompare(b.slug));
 }
 
-const ORIGEM = acharMemoria();
-if (!ORIGEM || !existsSync(ORIGEM)) {
-  console.error(`✗ não achei a pasta de memória. Declare CLAUDE_MEMORIA=<caminho>`);
+const PROJETOS = acharMemorias();
+if (!PROJETOS.length) {
+  console.error(`✗ não achei nenhuma pasta de memória. Declare CLAUDE_MEMORIA=<caminho>`);
   process.exit(1);
 }
 
@@ -109,57 +130,67 @@ function conferir(dir, rotulo) {
 
 // ── ação ─────────────────────────────────────────────────────────────────────
 if (acao === "conferir") {
-  conferir(ORIGEM, `disco  ${ORIGEM}`);
-  if (existsSync(DESTINO)) conferir(DESTINO, `repo   ${DESTINO}`);
+  for (const { slug, dir } of PROJETOS) {
+    conferir(dir, `disco  ${slug}`);
+    const espelho = join(DESTINO, slug);
+    if (existsSync(espelho)) conferir(espelho, `repo   ${slug}`);
+  }
   process.exit(0);
 }
 
-const [de, para] = acao === "enviar" ? [ORIGEM, DESTINO] : [DESTINO, ORIGEM];
-if (!existsSync(de)) { console.error(`✗ origem não existe: ${de}`); process.exit(1); }
-if (!SECO) mkdirSync(para, { recursive: true });
-
 let novos = 0, mudados = 0, iguais = 0, barrados = 0;
-const mudou = [], bloqueios = [];
-for (const f of md(de)) {
-  const a = join(de, f), b = join(para, f);
-  const agora = ler(a) || "";
+const mudou = [], bloqueios = [], sobras = [];
 
-  // GUARDIÃO: ao ENVIAR (disco → repo), nunca deixa segredo vivo ou memória sensível entrar no git
-  if (acao === "enviar" && f !== "MEMORY.md") {
-    const seg = varreSegredo(agora);
-    if (seg) { barrados++; bloqueios.push(`  ⛔ ${f} — ${seg.tipo} (${seg.trecho}) → cofre, não git`); continue; }
-    if (ehSensivel(agora) && !/secret\.mjs get/.test(agora)) {
-      barrados++; bloqueios.push(`  ⛔ ${f} — marcada sensitive:true sem ponteiro pro cofre`); continue;
+for (const { slug, dir } of PROJETOS) {
+  const espelho = join(DESTINO, slug);
+  const [de, para] = acao === "enviar" ? [dir, espelho] : [espelho, dir];
+  if (!existsSync(de)) continue; // projeto ainda sem espelho no repo (ao puxar) — nada a fazer
+  if (!SECO) mkdirSync(para, { recursive: true });
+
+  for (const f of md(de)) {
+    const a = join(de, f), b = join(para, f);
+    const agora = ler(a) || "";
+
+    // GUARDIÃO: ao ENVIAR (disco → repo), nunca deixa segredo vivo ou memória sensível entrar no git
+    if (acao === "enviar" && f !== "MEMORY.md") {
+      const seg = varreSegredo(agora);
+      if (seg) { barrados++; bloqueios.push(`  ⛔ ${slug}/${f} — ${seg.tipo} (${seg.trecho}) → cofre, não git`); continue; }
+      if (ehSensivel(agora) && !/secret\.mjs get/.test(agora)) {
+        barrados++; bloqueios.push(`  ⛔ ${slug}/${f} — marcada sensitive:true sem ponteiro pro cofre`); continue;
+      }
     }
+
+    const antes = ler(b);
+    if (antes === null) { novos++; mudou.push(`+ ${slug}/${f}`); }
+    else if (antes !== agora) { mudados++; mudou.push(`~ ${slug}/${f}`); }
+    else { iguais++; continue; }
+    if (!SECO) copyFileSync(a, b);
   }
 
-  const antes = ler(b);
-  if (antes === null) { novos++; mudou.push(`+ ${f}`); }
-  else if (antes !== agora) { mudados++; mudou.push(`~ ${f}`); }
-  else { iguais++; continue; }
-  if (!SECO) copyFileSync(a, b);
+  // o que existe no DESTINO e não na origem: nunca apaga sozinho — só denuncia
+  for (const f of md(para).filter(f => !existsSync(join(de, f)))) sobras.push(`${slug}/${f}`);
 }
+
 if (bloqueios.length) {
   console.log(`\n⛔ ${barrados} memória(s) BARRADA(s) do git (segredo vivo ou sensível):`);
   bloqueios.forEach(b => console.log(b));
   console.log(`   valor de segredo vive no cofre: node ferramentas/secret.mjs set <nome> --de-arquivo <memória>`);
 }
 
-// o que existe no DESTINO e não na origem: nunca apaga sozinho — só denuncia
-const soNoDestino = md(para).filter(f => !existsSync(join(de, f)));
-
 console.log(`\n${acao === "enviar" ? "disco → repositório" : "repositório → disco"}${SECO ? "  (SECO)" : ""}`);
-console.log(`  ${novos} novo(s) · ${mudados} alterado(s) · ${iguais} igual(is)`);
+console.log(`  ${PROJETOS.length} projeto(s) · ${novos} novo(s) · ${mudados} alterado(s) · ${iguais} igual(is)`);
 for (const m of mudou.slice(0, 15)) console.log(`     ${m}`);
 if (mudou.length > 15) console.log(`     … +${mudou.length - 15}`);
 
-if (soNoDestino.length) {
-  console.log(`\n  ▲ ${soNoDestino.length} arquivo(s) existem no destino e NÃO na origem — NÃO foram apagados:`);
-  for (const s of soNoDestino.slice(0, 10)) console.log(`     ${s}`);
+if (sobras.length) {
+  console.log(`\n  ▲ ${sobras.length} arquivo(s) existem no destino e NÃO na origem — NÃO foram apagados:`);
+  for (const s of sobras.slice(0, 10)) console.log(`     ${s}`);
   console.log(`     (apagar memória é decisão humana; este script nunca a toma)`);
 }
 
-conferir(de, "conferência da origem");
+for (const { slug, dir } of PROJETOS) {
+  conferir(acao === "enviar" ? dir : join(DESTINO, slug), `conferência ${slug}`);
+}
 
 if (acao === "enviar" && !SECO) {
   console.log(`\n  → agora registre: git -C ${CONTEXTO} add memoria && git -C ${CONTEXTO} commit`);
