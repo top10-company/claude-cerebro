@@ -169,11 +169,39 @@ trecho) — que a montagem e a finalização consomem. O contrato descreve o for
 
 ## 8 · A dependência que você exige do sistema — e ONDE ela vive
 
+### 8.0 · PRIMEIRO: pergunte à base. Não leia o blob na mão.
+
+**O acervo é consultável.** Antes de baixar catálogo nenhum, use os comandos — eles respondem em
+uma linha o que antes exigia parsear 458 registros na memória a cada vez:
+
+```bash
+top10 acervo livres --tema=geopolitica --horas=3   # trechos que NUNCA foram reaproveitados
+top10 acervo montar --horas=3 --tema=espaco        # PROPÕE o compilado, no formato que o
+                                                   # pipeline já consome (_reaproveitamento.json)
+top10 acervo sync                                  # re-projeta do bucket (rode se o acervo cresceu)
+```
+
+`montar` já faz por você o que ordenar por retenção sozinho não faz: **agrupa por vídeo-fonte**
+(pular de fonte a cada trecho quebra o fio e multiplica emendas a mascarar), **respeita o teto** de
+cada trecho e **abre bloco pelo gancho**. A saída é **proposta, não decisão** — o `titulo_novo` de
+cada trecho, os micro-cortes de CTA e a ordem dos blocos continuam sendo o seu julgamento.
+
+**A regra que sustenta isso (FIN-27):** o tópico é o **ativo**, e nasce UMA VEZ, do vídeo que o
+produziu. Reaparecer num compilado — ou como o filler que completa um vídeo de 20 min até o piso de
+30 — é **USO**, registrado no ledger, nunca ativo novo. É por isso que "o que ainda não usei" é uma
+pergunta respondível: `topico` menos `topico_uso`. Compilado **não se segmenta**; ele se reconhece.
+
+Precisando de algo que os verbos não dão, consulte direto (`estudio.db`, tabelas `topico` e
+`topico_uso`) — mas **não reimplemente o reconhecimento de reuso**: ele é determinístico e já roda.
+
+### 8.1 · A matéria-prima por trás
+
 Você só funciona sobre um **acervo indexado por nicho + transcrição** — sem ele, "achar vídeo do
 mesmo assunto" é chute. Esse índice **já existe**: é o **catálogo de conteúdo**
 `gs://geracao-animacoes-prod-renders/catalogo/catalogo.jsonl` (1 registro/vídeo), produzido pelo
 agente **`catalogador`** (repo `conteudo/` da org — ele lê a transcrição de cada vídeo e devolve o
-enriquecimento). O que você lê de cada registro:
+enriquecimento). É a FONTE; as tabelas acima são a projeção consultável dela. O que cada registro
+traz:
 
 - **`temas`** — a taxonomia controlada de 18 nichos (`espaco`, `historia`, `misterios`, `economia`,
   `lugares-extremos`…): é como você acha "vídeo do mesmo assunto".

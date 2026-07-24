@@ -4,10 +4,17 @@
 
 ## 1 · Entrada
 
+> **Comece pelos verbos, não pelo blob.** `top10 acervo montar --horas=N [--tema=X]` devolve a
+> proposta pronta **só com material nunca reaproveitado**, já no formato da sua saída;
+> `top10 acervo livres --tema=X --horas=N` lista o que está livre. Os dois consultam as tabelas
+> `topico`/`topico_uso` do `estudio.db`, que são a projeção do catálogo. Baixar e parsear o
+> `catalogo.jsonl` na mão é o caminho antigo — use só para o que os verbos não cobrem (ofício §8.0).
+
 | Vem de | O que é | Obrigatório |
 |---|---|---|
 | o vídeo novo (`out/<proj>/espelho.json` + `_blocos.json`) | a duração atual e os capítulos, para saber quanto FALTA até o piso | sim (no modo filler) |
-| o **catálogo de conteúdo** `gs://…/catalogo/catalogo.jsonl` (do `catalogador`) | 1 registro/vídeo: `temas` (18 nichos), `segmentos[{ini,fim,assunto,gancho,texto}]` com o **título de tópico já pronto**, `resumo`, `entidades`, `duracao_s` | sim — sem ele, bloqueio |
+| **`top10 acervo montar\|livres`** (tabelas `topico` + `topico_uso`) | os trechos disponíveis **já filtrados pelo que nunca foi reaproveitado**, ordenados por retenção real e agrupados por vídeo-fonte | sim — é o caminho de primeira escolha |
+| o **catálogo de conteúdo** `gs://…/catalogo/catalogo.jsonl` (do `catalogador`) | a FONTE por trás das tabelas: `temas` (18 nichos), `segmentos[{ini,fim,assunto,gancho,texto}]` com o **título de tópico já pronto**, `resumo`, `entidades`, `duracao_s` | só quando os verbos não bastarem |
 | a marca ativa | o piso de duração, o nicho/taxonomia do canal, a transição de virada | sim |
 | **`data_fonte`** — a data de PUBLICAÇÃO de cada vídeo-fonte | o lado "antes" do teste de relevância temporal do CTA (ofício §6) | **sim — sem ela, bloqueio** |
 | **`hoje`** — a data de HOJE | o lado "agora" do mesmo teste | **sim — sem ela, bloqueio** |
