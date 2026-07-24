@@ -185,6 +185,12 @@ enriquecimento). O que você lê de cada registro:
 
 **A fronteira limpa entre os dois repos é o bucket:** o `catalogador` (repo `conteudo/`) escreve o
 `catalogo.jsonl`; você (estúdio) lê. Não reimplemente a inteligência de segmentar/titular — ela é do
-catalogador. **Se um vídeo do nicho ainda não tem `segmentos`** (não foi enriquecido — hoje 135 de
-458), ele não é utilizável às cegas: reporte o buraco (é o TO-DO de enriquecimento, PLANO E13), não
-invente título a partir do nada.
+catalogador. **Se um vídeo do nicho ainda não tem `segmentos`** (não foi enriquecido), ele não é
+utilizável às cegas: reporte o buraco, não invente título a partir do nada.
+
+⚠️ **Nunca assuma quanto do acervo está enriquecido — isso muda sozinho.** O enriquecimento roda
+como job ocioso e come o backlog sem avisar ninguém, então qualquer número escrito aqui apodrece em
+dias. A medição vive em `var/estado/ancoras.json` (`node scripts/ancoras.mjs` regenera); o
+`top10 doctor` reprova doutrina que crave contagem divergente dela. Em 23/jul/2026 esta linha
+afirmava um terço do valor real, e este agente recusava nichos inteiros por achar que não tinha
+matéria-prima que já estava no disco. **Consulte a medição, não a memória.**
