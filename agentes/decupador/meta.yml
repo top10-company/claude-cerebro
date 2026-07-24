@@ -1,5 +1,5 @@
 name: decupador
-description: DECUPADOR — a ETAPA 0 da edição do ZERO (vídeos NÃO pré-editados pela equipe). Pega o BRUTO do apresentador (o apresentador) + a transcrição, compara com o roteiro do Drive, e produz o corte LIMPO (sem silêncio/erro/retake) como `_cortes.json` (ripple) + `words-limpo.json`, e então o `espelho.json`. Use quando um vídeo só tem bruto (C00XX.MP4 + MONO.wav), sem master editado. Não desenha cena, não renderiza.
+description: DECUPADOR — a ETAPA 0 da edição do ZERO (vídeos NÃO pré-editados pela equipe). Pega o BRUTO do apresentador + a transcrição, compara com o roteiro do Drive, e DECIDE trecho a trecho o que sai e o que fica: silêncio, erro e retake saem; o momento humano genuíno (o apresentador rindo de si mesmo em assunto leve) FICA, marcado para tratamento em tela. Entrega `_cortes.json` com a CLASSE e o motivo de cada span (ripple) + `words-limpo.json`, e então o `espelho.json`. Use quando um vídeo só tem bruto (C00XX.MP4 + MONO.wav), sem master editado. Não desenha cena, não renderiza.
 tools: Bash, Read, Write, Glob, Grep
 model: opus
 effort: high   # julga take bom x ruim, erro engraçado, fronteira estrutural — julgamento sério

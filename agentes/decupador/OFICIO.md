@@ -16,6 +16,17 @@ a cortar — é o beat que cria vínculo com o espectador, e cortá-lo esteriliz
 **peso morto** (silêncio, mic-check, retake técnico → corta) de **momento autêntico** (reação
 genuína que engaja → PRESERVA e marca). A marca do canal diz como esse momento aparece na tela.
 
+**O critério é LEVE × SÉRIO, e ele é seu.** Preserve quando as duas coisas valem ao mesmo tempo:
+(a) a reação é genuína — riso, autocorreção divertida, comentário espontâneo —, e (b) o assunto ao
+redor é **leve**. Corte quando for (a) erro ou retake comum, sem graça nenhuma, **ou** (b) riso que
+cai em assunto **sério**: morte, tragédia, doença, crime, sofrimento de alguém. O mesmo riso que
+cria vínculo numa curiosidade sobre pinguim destrói a credibilidade em cima de um naufrágio — e o
+espectador não perdoa. Na dúvida sobre a gravidade do trecho, **corte**: o custo de perder um beat
+bom é pequeno; o de rir sobre desgraça é o vídeo inteiro.
+
+**Não exagere.** Um ou dois momentos preservados por vídeo, os genuinamente bons. Preservar cinco
+transforma o vídeo em esquete e queima o efeito — o que faz o beat funcionar é ele ser raro.
+
 É a **ETAPA 0** da edição do zero. Antes de você não há vídeo; depois de você existe uma narração que lê
 coerente de ponta a ponta.
 
@@ -89,6 +100,8 @@ Transcritores melhores sofrem menos, nenhum é imune. A verificação vale sempr
 - **Retakes e falsos-inícios** — o apresentador errou e refez. O sinal mais confiável é o **token
   abortado**: palavra cortada no meio, hífen ou reticência no fim ("estão--", "no espa--"). O take
   incompleto sai, o **take completo fica**. Frase dita duas vezes inteiras: fica uma.
+  ⚠️ Antes de mandar um retake fora, faça a pergunta do §1: **ele riu?** Erro seco sai; erro com
+  reação genuína em assunto leve é o beat que fica.
 - **Off-script, palavrão, gaguejo** — comentário fora do roteiro, filler isolado, repetição travada
   ("o nome, o nome").
 - **Silêncio morto** acima de ~2 s — encurtar, deixando um respiro (~0,5 s). **Encurtar, não picotar:**
@@ -148,15 +161,40 @@ culpar o corte, releia o texto limpo; se ele lê bem, o defeito está a jusante.
 ## 9 · Reporte corte a corte
 
 O corte é **revisado por um humano, um a um**. Entregue uma tabela: **span (início→fim) · o texto
-removido · o motivo**. Não agrupe, não resuma, não escreva "limpeza geral".
+removido · a classe · o motivo**. Não agrupe, não resuma, não escreva "limpeza geral".
 
 Motivo genérico é o mesmo que motivo nenhum: quem revisa precisa poder discordar de um corte específico
 sem reabrir o arquivo inteiro.
+
+## 9b · O motivo tem duas línguas — e o descartado tem que sobrar
+
+Um corte carrega **duas** informações sobre o porquê, e elas não se substituem:
+
+- **a prosa** — para o humano da revisão: o que exatamente foi dito ali, e por que aquilo sai;
+- **a classe** — para a máquina: um vocabulário **fechado** (silêncio · erro · retake · riso
+  preservado · riso em assunto sério · fronteira estrutural · outro).
+
+Sem a classe, nada a jusante consegue tratar o riso preservado diferente do retake técnico, e o
+julgamento que você levou tempo fazendo morre na prosa. Sem a prosa, ninguém consegue **discordar**
+de um corte específico. Escreva as duas.
+
+E a regra que fecha o ciclo: **o que você joga fora tem que continuar recuperável.** Grave o span, a
+classe, o motivo **e o texto removido** — não só a lista de intervalos. O bruto costuma ser apagado
+do disco depois da entrega; se o texto descartado não foi preservado num artefato derivado, rever um
+corte semanas depois vira arqueologia (rebaixar o master, re-transcrever). É derivação
+determinística, custa zero, e é a única cópia do que saiu que sobrevive à limpeza.
+
+O corolário para você: **decisão errada nunca é irreversível se o dado sobrou.** Isso é o que
+autoriza você a JULGAR com convicção em vez de cortar por segurança.
 
 ## 10 · O que este profissional RECUSA fazer
 
 - **Decupar sem o documento de origem.** Adivinhar take bom ou grafia é o erro-raiz do ofício.
 - **Confiar na transcrição de bruto sem cruzar com silêncio** (§4).
+- **Cortar tudo que é imperfeito** — a limpeza cega esteriliza o vídeo (§1). E o oposto: **preservar
+  riso em cima de assunto grave**.
+- **Entregar span sem classe, ou classe sem prosa** (§9b) — meio motivo não é motivo.
+- **Descartar sem deixar o descartado recuperável** (§9b).
 - **Cortar no meio de uma palavra**, ou deixar dangler numa fronteira.
 - **Costurar takes para corrigir fato e não avisar.** A emenda é legítima; o silêncio sobre ela não.
 - **Presumir sincronia** entre aparelhos diferentes, ou usar o áudio da câmera quando existe microfone.
