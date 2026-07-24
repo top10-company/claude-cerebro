@@ -46,6 +46,21 @@ CONTRATO embutidos, sem depender de caminhos). É **vivo**: quando um agente nov
 `git pull` que traga agente novo.** Se o projeto tem `marcas/<marca>/agentes/<nome>.md`, o agente
 lê essa roupa por cima do ofício puro.
 
+**4. Aponte a memória para o seu repositório de contexto.** Se o seu contexto não estiver exatamente
+em `~/claude-contexto`, declare onde ele está — no `~/.zshrc` (ou equivalente do seu shell):
+
+```bash
+export CLAUDE_CONTEXTO="$HOME/www/<seu-repo-de-contexto>"
+```
+
+Sem isso o `memoria-sync` usa o default `~/claude-contexto`. Se esse caminho existir mas **não for
+um repositório git**, ele copia a memória para lá e manda você rodar `git -C` numa pasta sem `.git`
+— o comando falha e a memória fica fora do versionamento, parecendo salva. O script hoje **para com
+erro** nesse caso em vez de copiar; a variável é o que evita chegar nele. (Aconteceu de verdade
+nesta instalação até 23/jul/2026: 97 memórias moraram numa pasta solta, sem backup.)
+
+Confira com `node ~/claude-cerebro/ferramentas/memoria-sync.mjs conferir`.
+
 ### Windows
 
 Igual, com os caminhos do sistema. O arquivo de instruções globais fica em

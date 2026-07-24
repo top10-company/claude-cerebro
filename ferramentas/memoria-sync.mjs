@@ -51,6 +51,19 @@ if (!["enviar", "puxar", "conferir"].includes(acao)) {
 const CONTEXTO = process.env.CLAUDE_CONTEXTO || join(homedir(), "claude-contexto");
 const DESTINO = join(CONTEXTO, "memoria");
 
+// A TRAVA: um destino sem .git não versiona nada. O script copiaria os arquivos, mandaria rodar
+// `git -C <destino> add`, o comando falharia — e a memória ficaria fora do versionamento com toda
+// a aparência de sucesso. Foi o que rodou nesta máquina até 23/jul/2026: CLAUDE_CONTEXTO não estava
+// definida, o default caiu numa pasta solta, e 97 memórias moraram lá sem backup nenhum.
+// Isto NÃO é aviso: é parada. Salvar no lugar errado é pior que não salvar, porque parece salvo.
+if (!existsSync(join(CONTEXTO, ".git"))) {
+  console.error(`✗ ${CONTEXTO} não é um repositório git — não adianta copiar memória para lá.`);
+  console.error(`  Aponte CLAUDE_CONTEXTO para o repositório de contexto:`);
+  console.error(`      export CLAUDE_CONTEXTO=~/www/<seu-repo-de-contexto>`);
+  console.error(`  (ou rode 'git init' nesse caminho, se ele for mesmo o repositório)`);
+  process.exit(1);
+}
+
 // TODOS os projetos com memória — um por pasta em ~/.claude/projects/<slug>/memory.
 //
 // Antes daqui saía UM só: "a memória com mais arquivos, quase sempre a do trabalho principal".
