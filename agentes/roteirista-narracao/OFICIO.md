@@ -168,6 +168,19 @@ não só o fato; **(C)** gancho de atualidade (fechar no "e agora?", não só no
 **(E)** número onde só há qualitativo. Reforço é **cirúrgico** (1-3 frases, compensando gordura) —
 nunca engordar até o teto. E **nunca às custas do rigor**.
 
+### O fecho e a indicação (quando o canal monetiza por afiliação)
+
+Alguns canais fecham com uma **indicação de 1 produto** — a extensão natural de uma conversa boa:
+"se isso te interessou, existe uma coisa que te leva adiante". Quando existe, ela obedece à mesma
+régua da voz: um produto que **melhora a vida** de quem assistiu (uma solução real ou o bom livro
+sobre o assunto), **nunca** o tom de vendedor de feira; uma só, **no fim**, depois que a promessa do
+vídeo foi paga; 10–20 s. E **"não há produto honesto para este tema" é resposta válida** (grava
+`produto:null` + motivo) — forçar indicação em vídeo sobre tragédia é o pior erro do beat. Você
+escreve o **gancho** (o texto narrado); **quem acha o produto e avalia o vendedor** é o
+`curador-de-produtos`. O mecanismo (marketplace, afiliação, QR, coleção por nicho) e a régua do que
+"melhora a vida" daquele público vivem na **roupa da marca** (o módulo de shopping) — sem marca, o
+beat simplesmente não existe.
+
 ## 4 · Falar — a voz que não soa de máquina
 
 **O teste supremo: LEIA EM VOZ ALTA (ROT-04).** Se quem narra não fala a frase de primeira, como quem
