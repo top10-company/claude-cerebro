@@ -21,12 +21,17 @@ O produto do ofício tem nome: **espelho** — o espelho da edição, cena a cen
 
 ## 2 · Os três estados em que o material chega
 
-O ofício é o mesmo; o ponto de partida muda.
+O ofício é o mesmo; o ponto de partida muda. **Descubra em qual você está ANTES de decidir
+qualquer coisa** — é o que define se você tem cinco veredictos disponíveis ou apenas um (§4).
 
-1. **Do zero** — existe só a fala limpa (já decupada). Toda janela é decisão sua.
-2. **Já editado por terceiros** — existe um master montado (apresentador + cobertura). Você **edita por
-   cima**, nunca reinventa do zero: o que presta fica, o que não presta é substituído.
-3. **Re-espelho** — já existe um espelho e uma parte da produção foi paga (cenas desenhadas,
+1. **Do zero** — ⭐ **É O PADRÃO, e é a maioria esmagadora do que se produz.** Existe só a fala limpa
+   (gravação do apresentador, já decupada). **Não há edição anterior para julgar**: toda janela é
+   decisão sua, e toda cena nasce nova.
+2. **Já editado por terceiros** — ⚠️ **EXCEÇÃO, e só por pedido explícito.** Existe um master montado
+   por editores humanos. Acontece em dois casos, ambos raros: um **compilado de vídeos antigos** que
+   nunca tiveram animação, e a **repostagem modernizada** de um vídeo antigo (branding novo, títulos
+   de tópico, motion, mapas). Aqui você **edita por cima**, nunca reinventa do zero.
+3. **Re-espelho** — já existe um espelho e parte da produção foi paga (cenas desenhadas,
    renderizadas, aprovadas). Aqui o risco não é criativo, é **de identidade** — leia o §8 antes de
    tocar em qualquer coisa.
 
@@ -57,18 +62,36 @@ julgador humano ou automático folheando dezenas de planos **não lembra** que v
 planos atrás; por isso a detecção de repetição tem que ser mecânica e chegar pronta na sua mesa, e o
 julgamento tem que ser forçado, não opcional.
 
-## 4 · Os cinco veredictos
+## 4 · Os veredictos — e QUAIS deles você tem, que depende do estado (§2)
 
-| Veredicto | Quando |
-|---|---|
-| **manter** | o que está lá já ilustra bem — não há valor em refazer |
-| **trocar** | ilustração fraca, genérica ou reciclada → cena nova no lugar |
-| **recompor** | o conteúdo serve, o arranjo não (composição feia, moldura errada) |
-| **converter** | o material é bom mas está no formato errado (print de matéria → cena de documento) |
-| **adicionar** | buraco: trecho com necessidade visual real e nada ilustrando |
+**Quatro dos cinco veredictos só existem quando há edição anterior para julgar.** Eles são
+julgamentos *sobre um plano que alguém já montou* — sem esse plano, não têm sujeito.
+
+| Veredicto | Quando | Vale no estado |
+|---|---|---|
+| **adicionar** | trecho com necessidade visual e nada ilustrando → cena nova | **1, 2 e 3** |
+| **manter** | *(estado 1)* o plano do APRESENTADOR fica na tela, sem cobertura · *(2 e 3)* o que está lá já ilustra bem | **1, 2 e 3** |
+| **trocar** | ilustração fraca, genérica ou reciclada → cena nova no lugar | só **2 e 3** |
+| **recompor** | o conteúdo serve, o arranjo não (composição feia, moldura errada) | só **2 e 3** |
+| **converter** | o material é bom mas está no formato errado (print de matéria → cena de documento) | só **2 e 3** |
+
+⭐ **No estado 1 — o padrão, o vídeo do apresentador — existem DOIS: `adicionar` e `manter`.**
+`manter` ali significa **deixar o rosto do apresentador em tela** (dá autoridade, cria intimidade, e
+alguns beats pedem isso); `adicionar` é cobrir a fala com cena. **`trocar`, `recompor` e `converter`
+não têm sujeito** — não existe ilustração prévia de terceiros para julgar. Usá-los num vídeo que
+nasceu do zero é sinal de que você entendeu o estado errado; pare e releia o §2.
+
+⚠️ **Repare que `manter` muda de significado com o estado** — no 1 é sobre o apresentador, no 2 é
+sobre a cobertura de terceiros. Escreva sempre o QUÊ está mantendo ("MANTER o rosto do Bôco",
+"MANTER a cobertura de arquivo"), nunca o verbo sozinho: quem ler depois não tem como adivinhar.
 
 "Adicionar" é decisão do **espelho** (sobre o vazio entre planos), não do julgamento de um plano que
 existe. Manter os dois vocabulários separados evita que "não sei" vire uma categoria.
+
+> **Por que isto está cravado assim** (Mateus, 24/jul): *"Esse manter/trocar/recompor/converter só se
+> aplica se o vídeo inicialmente veio do caminho já pré-editado, né? O que não vai ser o caso dos
+> vídeos que vieram do watcher do Bôco."* Está certo — e a doutrina antiga apresentava os cinco como
+> se valessem sempre, o que empurrava o montador a inventar julgamento sobre material que não existe.
 
 ## 5 · Cobertura: necessidade, nunca cota
 
