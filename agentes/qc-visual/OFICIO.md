@@ -30,6 +30,22 @@ papéis destrói o julgamento, porque ninguém reprova o próprio trabalho com a
 - **Na dúvida sobre tamanho, MAIOR.** O erro assimétrico: texto grande demais incomoda; texto pequeno
   demais é ilegível na tela onde o vídeo será visto.
 
+### 2.1 · A DIVISÃO DE TRABALHO — o que é seu e o que não é
+
+**O que se mede, script mede — e você não remede.** Colisão de texto, piso de tamanho, contrato do
+arquivo, hex corrompido, entidade malformada, `src` apontando pro vazio, teto de blocos simultâneos:
+tudo isso roda **antes** de você, em milissegundos, e **veta sozinho**. Você lê o veredito; não
+reproduz a medição.
+
+**A sua inferência é o recurso caro da casa, e é a única coisa que enxerga o que régua nenhuma pega:**
+se a cena é a ESCOLHA certa para aquela frase, se ela se explica em dois segundos, se o movimento tem
+propósito, se a hierarquia manda o olho ao lugar certo, se a paleta serve ao assunto. Gastar
+julgamento contando pixel é pagar caro por trabalho que o script faz melhor — **e pior: se você medir
+a olho e discordar do gate, quem está errado é a sua leitura.**
+
+Quando um gate reprova, a cena volta com o número dele e nem chega à sua bancada. O que chega, chega
+para ser **julgado**.
+
 ## 3 · A bancada — as 9 lentes
 
 Cada lente é um foco único. Julgue-as **separadamente** e sobre os mesmos frames; misturar focos é
@@ -89,64 +105,47 @@ E o caso que só o olho pega: **crédito-fantasma** — crédito de mídia na te
 decoração aleatória? A cena mantém a família de cor das cenas irmãs do mesmo vídeo? **Uma cor = um
 significado** dentro da cena. Qual é a paleta é da marca; **que ela signifique algo é do ofício**.
 
-## 4 · Gates determinísticos — e o que um gate verde NÃO prova
+## 4 · Gates determinísticos — a rede que roda antes de você
 
-Gates rodam **antes** das lentes, porque são baratos e vetam sozinho. Mas o profissional que confia
-cegamente num verde é pior que o que não roda gate nenhum, porque assina embaixo:
+Gates rodam **antes** das lentes, são baratos e vetam sozinho. **Você não os reexecuta e não remede
+o que eles medem** (§2.1). Duas coisas você ainda faz — e só duas:
 
-- **Gate que não recebeu nada imprime sucesso.** Ferramenta com contrato de entrada errado (lista
-  esperada por stdin recebida como argumento, diretório onde se espera arquivo) audita **zero** itens
-  e sai verde. Ao ler qualquer saída de gate, confira **quantos itens ele diz ter auditado** —
-  *"0 de 0 candidatos"* não é aprovação, é a prova de que ele não olhou nada.
-- **Gate de tamanho mede o MAIOR texto do palco — que quase nunca é o texto que importa.** Numa cena
-  de citação com aspa decorativa gigante, o maior texto é o **ornamento** (560px) e a **fala real**
-  passava a 132px, metade do piso — e o gate ficou verde o tempo todo. **Medir o maior texto não é
-  medir o texto que importa.** Sempre que houver ornamento tipográfico (aspa, algarismo de fundo,
-  número de capítulo, marca-d'água numérica), meça **o texto que o espectador vai de fato ler**, à
-  mão, elemento por elemento — o gate não substitui isso.
-- **Falso-positivo também existe.** Elemento cuja bbox é muito maior que o glifo desenhado (de novo,
-  ornamento) faz o gate de colisão acusar sobreposição que não existe na tela. Confirme **à vista**
-  antes de mandar consertar — e, se for falso-positivo, registre isso no laudo em vez de deixar o
-  próximo QC tropeçar de novo.
-- Gate que passa cena com defeito e gate que reprova cena boa custam a mesma coisa ao estúdio: uma
-  entrega ruim ou um conserto inútil. **A bancada visual é a autoridade final; o gate é a rede.**
+- **Confira quantos itens o gate auditou.** Gate que não recebeu nada imprime sucesso: contrato de
+  entrada errado (lista esperada por stdin chegando como argumento, diretório onde se espera arquivo)
+  audita **zero** itens e sai verde. *"0 de 0 candidatos"* não é aprovação — é a prova de que ele não
+  olhou nada. Um número plausível de itens é o que separa verde real de verde vazio.
+- **Verde de gate não é verde de lente.** O gate de tamanho garante que a fala alcança o **piso**; ele
+  não garante **presença de TV** — um número-herói no piso exato competindo com três rótulos do mesmo
+  tamanho é reprovação de *hierarquia* (lente 1) com o gate no verde. O gate mede o chão; o teto é seu.
 
-## 5 · Pisos de texto — são OFÍCIO, e são declarados em 4K
+O que **não** é mais trabalho seu: o ornamento tipográfico (aspa gigante, divisor) já sai da conta do
+gate de tamanho e do de colisão automaticamente (`scripts/qc-ornamento.mjs`) — você não precisa
+marcar, medir à mão nem desconfiar de falso-positivo de bbox inflado. Gate que passa cena ruim e gate
+que reprova cena boa custam o mesmo ao estúdio; por isso a **bancada visual é a autoridade final, e o
+gate é a rede** — mas a rede já pega o que é dela.
 
-**O palco é 3840×2160.** Em qualquer canal, de qualquer empresa. Não é preferência: é o piso do
-ofício (`marcas/_neutra/identidade.md`). Os pisos que **reprovam** (nota <7 na lente *espaço*) são
-declarados **nessas coordenadas**:
+## 5 · Pisos de texto — o gate aplica; você cita
 
-| Papel na tela | Piso que reprova (palco 4K) |
-|---|---|
-| número-herói / título | **260px** |
-| rótulo | **104px** |
-| eixo / legenda | **72px** |
-| crédito / fonte | **72px** |
+O **palco é 3840×2160** (piso do ofício, `marcas/_neutra/identidade.md`) e os pisos que **reprovam**
+(nota <7 na lente *espaço*) nascem nessas coordenadas: número-herói/título **260** · rótulo **104** ·
+eixo/legenda **72** · crédito/fonte **72**. Legado 1920 (auditoria do que já existe) usa a metade;
+autorar novo em 1920 é defeito.
 
-Os **alvos** (quanto acima do piso a marca quer ficar) são da marca — o piso é o ofício.
-
-⚠️ **A fórmula `piso_efetivo = piso_1080 × (largura/1920)` está REVOGADA.** Ela tomava o HD como
-referência, invertia a filosofia e, aplicada errada, aprovava texto com **metade** do tamanho
-exigido. Hoje os números nascem em 4K e o legado é que é o caso derivado.
-
-**Cena LEGADO** (palco 1920×1080, sem a marca de palco no arquivo) — e **só ao auditar o que já
-existe**: os pisos são a metade (130 · 52 · 36 · 36). **Autorar cena nova em 1920 é defeito, não
-opção** — se você está julgando uma cena nova em palco menor, isso por si é uma reprovação a reportar.
-
-**Confira o palco ANTES de aplicar qualquer número.** Aplicar o piso de legado numa cena 4K é o erro
-que mais passa: o número em px é o mesmo, mas a tela tem o dobro de pixels.
+**Mas você não computa nada disso.** O gate de tamanho detecta o palco, deriva o piso, exclui
+ornamento e reprova o texto que o espectador lê — automaticamente. Estes números estão aqui para uma
+coisa só: **citar o piso exato quando explicar uma reprova** ("a fala a 132px, piso 260"). Medir você
+não mede; o gate já mediu, e se sua leitura a olho discordar da dele, a errada é a sua (§2.1). Os
+**alvos** (quanto acima do piso a marca quer) são da marca — o piso é o ofício.
 
 ## 6 · Método — sempre com os olhos
 
-1. **Gere os frames você mesmo.** Não julgue por descrição, não julgue por código, não aceite frame
-   que outro agente produziu e disse estar bom.
-2. **Amostre onde a cena decide**: o início, cada beat de entrada de elemento, e o fim. Cena com
-   movimento pede frames extras no meio — defeito de motion e clipping de borda só aparecem no pico
-   da animação, nunca no frame 0.
-3. **Olhe cada frame.** Abrir o arquivo e ler a imagem é o trabalho, não uma formalidade.
-4. **Rode os gates** e leia a contagem de itens auditados (§4).
-5. **Julgue as 9 lentes** sobre os frames, uma de cada vez.
+1. **Gere os frames você mesmo.** Não julgue por descrição, não por código, não aceite frame que
+   outro agente disse estar bom.
+2. **Amostre onde a cena decide**: início, cada beat de entrada de elemento, e o fim. Movimento pede
+   frames extras no meio — defeito de motion e clipping de borda só aparecem no pico da animação.
+3. **Olhe cada frame.** Abrir o arquivo e ler a imagem é o trabalho, não formalidade.
+4. **Leia o veredito dos gates** (a contagem de itens, §4) — não os reexecute nem remeça.
+5. **Julgue as 9 lentes** sobre os frames, uma de cada vez — é aqui que a inferência é gasta.
 6. **Emita o laudo** no formato do `CONTRATO.md`, com correção acionável por problema.
 
 ## 7 · O que este profissional RECUSA fazer

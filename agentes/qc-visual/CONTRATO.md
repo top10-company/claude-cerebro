@@ -70,30 +70,29 @@ Por cena: o **veredito** (aprovado/reprovado) · a **nota de cada lente** · os 
 que cada um mediu** (com a contagem de itens auditados) · os problemas em ordem de gravidade, cada um
 com a **correção acionável** · e o caminho do laudo gravado.
 
-## 3 · Os gates que você roda
+## 3 · Os gates — que **outro** roda, e você lê
 
-Rodam **antes** das lentes. Cada um veta sozinho.
+Rodam **antes** de você e vetam sozinho. **O agente de criação os roda e conserta até o verde ANTES
+de te entregar a cena** (`top10 qc out/<proj>` = a varredura determinística de todas as cenas). Numa
+cena que chegou à sua bancada eles já passaram; você **lê o veredito, não reexecuta** (OFÍCIO §2.1).
 
-| # | Gate | Comando | Veta quando |
+| # | Gate | O que veta | Runner (quem roda antes de você) |
 |---|---|---|---|
-| 1 | Contrato de cena | `node scripts/qc-contrato.mjs <html>` | sem `window.__renderAt`/`__duracao`; usa `Date.now(`/`Math.random(`/`@keyframes` |
-| 2 | Colisão de texto (bbox medido) | `node scripts/check-overlap.mjs <html>` | qualquer par de textos visíveis sobreposto em qualquer frame |
-| 3 | Excesso simultâneo | `node scripts/guard-rail.mjs <html> --max=<teto da marca>` | pico de blocos-de-informação acima do teto |
-| 4 | Tamanho de texto | **medição à mão nos frames** (§5 do OFÍCIO) | qualquer texto abaixo do piso do palco |
-| 5 | Hex corrompido | `grep -oE '#[0-9A-Fa-f]{3,8}[a-z]' <html>` | **qualquer** match (tem que voltar vazio) |
-| 6 | Crédito-fantasma | inspeção do frame | crédito de mídia na tela sem a mídia na tela |
+| 1 | Contrato de cena | sem `__renderAt`/`__duracao`; `Date.now(`/`Math.random(`/`@keyframes` | `scripts/qc-contrato.mjs` |
+| 2 | Colisão de texto (bbox medido) | par de textos visíveis sobreposto em qualquer frame | `scripts/check-overlap.mjs` |
+| 3 | Excesso simultâneo | pico de blocos acima do teto da marca | `scripts/guard-rail.mjs --max=<teto>` |
+| 4 | **Tamanho de texto** | texto abaixo do piso do palco (ornamento já EXCLUÍDO) | `scripts/qc-tamanho.mjs` |
+| 5 | Til do Bold | Ã/Õ maiúsculo em weight 600–749 | `scripts/_audit-til.mjs` |
+| 6 | src apontando pro vazio | `src`/`href` de mídia inexistente | `scripts/qc-src-existe.mjs` |
+| 7 | Crédito-fantasma | crédito de mídia na tela sem a mídia | inspeção do frame (sua) |
 
-⚠️ **O gate 4 não tem runner determinístico vivo nesta instalação** — o script histórico
-(`scripts/qa-final.mjs`) passou a ler `espelho.json` (lia `plano-roteirista.json` e ficava CEGO em 11 de 18 projetos, saindo exit 0 sem auditar nada) e delega o tamanho ao `scripts/qc-tamanho.mjs`
-por nada em produção. Enquanto for assim, **tamanho é medição sua, à vista, elemento por elemento** —
-e é exatamente o gate que o ornamento tipográfico engana (OFÍCIO §4).
+**O gate 4 TEM runner vivo** — é o `scripts/qc-tamanho.mjs`, que detecta o palco, deriva o piso da
+REND-15, **exclui o ornamento tipográfico** (aspa/divisor, via `scripts/qc-ornamento.mjs`) e reprova
+o maior texto REAL abaixo do piso de herói. A antiga instrução "meça o tamanho à mão porque o
+ornamento engana o gate" está **REVOGADA**: o gate não é mais enganado. Você não remede tamanho.
 
-⚠️ `check-overlap.mjs` **não** detecta palco 4K (roda sempre em viewport 1920) e resolve o caminho
-**relativo ao diretório de trabalho** — passe o caminho relativo, e trate a saída como indício a
-confirmar à vista, não como veredito.
-
-A marca acrescenta os gates dela (bug de fonte, auditoria tipográfica, o que for). Ao usar qualquer
-um: **leia a contagem de itens auditados** antes de aceitar o verde (OFÍCIO §4).
+Só o **crédito-fantasma** (gate 7) continua sendo olho seu — é o único que régua nenhuma pega. Ao ler
+qualquer gate: confira a **contagem de itens auditados** (OFÍCIO §4); *"0 de 0"* é verde vazio.
 
 ## 4 · Os frames — como você produz a evidência
 
@@ -111,11 +110,10 @@ frames extras no meio. **Abra cada PNG e olhe** (Read) — o frame gerado e não
 | # | Checagem | Como |
 |---|---|---|
 | 1 | Os frames existem e você **olhou** todos | Read em cada PNG gerado |
-| 2 | O palco da cena foi identificado antes de aplicar piso | inspeção do `<html>` (marca de palco) |
-| 3 | Os 9 nomes de lente estão no laudo, nenhum faltando | releitura do JSON |
-| 4 | `aprovado` é coerente com as notas e os gates | TODAS ≥7 **e** `gatesDuros` vazio |
-| 5 | O laudo é JSON válido e passa no contrato | `node scripts/validar-contrato.mjs laudo-qc out/<proj>/qc/<cena>.laudo.json` |
-| 6 | O gate lê o que você gravou | `node scripts/qc-laudo.mjs out/<proj>` |
+| 2 | Os 9 nomes de lente estão no laudo, nenhum faltando | releitura do JSON |
+| 3 | `aprovado` é coerente com as notas e os gates | TODAS ≥7 **e** `gatesDuros` vazio |
+| 4 | O laudo é JSON válido e passa no contrato | `node scripts/validar-contrato.mjs laudo-qc out/<proj>/qc/<cena>.laudo.json` |
+| 5 | O gate lê o que você gravou | `node scripts/qc-laudo.mjs out/<proj>` |
 
 ## 6 · Fronteira e bloqueio
 
