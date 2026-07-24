@@ -101,9 +101,9 @@ dem: {type:'raster-dem', tiles:['https://api.maptiler.com/tiles/terrain-rgb-v2/{
 
 ## 6 · Onde a cena de mapa renderiza
 
-🖥️ **Cena de mapa é WebGL ⇒ render LOCAL.** A frota de render remota **não tem GPU** — mapa mandado
+🖥️ **Cena de mapa é WebGL e agora renderiza NA NUVEM (REND-18).** A `estudio-l4` tem GPU (nvidia-l4), então o mapa entra no MESMO lote que o resto: `top10 render <proj>`. Até 24/jul o mapa voltava pro Mac porque a nuvem não tinha GPU — era isso que partia o lote em dois caminhos, com dois modos de falha.
 pra lá volta preto ou não volta. Nesta instalação: `./render-one.sh <html> <out> branca --final`
-(cena < 10 s ⇒ `--nopad`), nunca `scripts/render-fleet/fleet.mjs`.
+(cena < 10 s ⇒ `--nopad`) para conferir UMA cena; o lote inteiro vai por `top10 render <proj>`.
 
 ## 7 · O que você valida ANTES de entregar
 
